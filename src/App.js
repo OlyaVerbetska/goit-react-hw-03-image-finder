@@ -1,11 +1,26 @@
 import { Component } from 'react';
+
+import Searchbar from './components/Searchbar/Searchbar';
+import ImageGallery from './components/ImageGallery';
+
 import './styles.css';
 
 class App extends Component {
-  state = {};
+
+
+  handleSearchQuery = ({ query }) => {
+    console.log(query);
+  };
 
   render() {
-    return <div className="container"></div>;
+    
+    return (
+      <>
+        <Searchbar onSubmit={this.handleSearchQuery} />
+        <p>searchResults</p>
+        <ImageGallery/>
+      </>
+    );
   }
 }
 

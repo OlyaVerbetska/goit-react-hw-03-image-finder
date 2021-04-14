@@ -1,25 +1,95 @@
 import { Component } from 'react';
 
+import Loader from 'react-loader-spinner';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+
 import Searchbar from './components/Searchbar/Searchbar';
 import ImageGallery from './components/ImageGallery';
+
+import imagesAPI from './services/images-api.js';
 
 import './styles.css';
 
 class App extends Component {
+  state = {
+    images: [],
+    currentPage: 1,
+    searchQuery: '',
+    isLoading: false,
+    error: null,
+  };
 
+  componentDidMount() {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
+  }
 
-  handleSearchQuery = ({ query }) => {
-    console.log(query);
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.searchQuery !== this.state.searchQuery) {
+      this.getImages();
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }
+
+  handleSearchQuery = query => {
+    this.setState({
+      searchQuery: query,
+      images: [],
+      currentPage: 1,
+      isLoading: false,
+      error: null,
+    });
+  };
+
+  getImages = () => {
+    const { currentPage, searchQuery } = this.state;
+    //=====newsApi
+    const options = {
+      searchQuery,
+      currentPage,
+    };
+
+    this.setState({ isLoading: true });
+
+    imagesAPI
+      .fetchImages(options)
+      .then(hits =>
+        this.setState(prevState => ({
+          images: [...prevState.images, ...hits],
+          currentPage: prevState.currentPage + 1,
+        })),
+      )
+      .catch(error => this.setState({ error: 'zhopa' }))
+      .finally(() => this.setState({ isLoading: false }));
   };
 
   render() {
-    
+    const { images, isLoading } = this.state;
     return (
-      <>
+      <div className="App">
         <Searchbar onSubmit={this.handleSearchQuery} />
-        <p>searchResults</p>
-        <ImageGallery/>
-      </>
+        <ImageGallery images={images} />
+        {isLoading && (
+          <Loader
+            type="Bars"
+            color="#00BFFF"
+            height={100}
+            width={100}
+            timeout={3000} //3 secs
+          />
+        )}
+
+        {!isLoading && images.length > 0 && (
+          <button type="button" className="button" onClick={this.getImages}>
+            Load More
+          </button>
+        )}
+      </div>
     );
   }
 }

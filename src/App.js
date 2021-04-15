@@ -5,6 +5,7 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import Searchbar from './components/Searchbar/Searchbar';
 import ImageGallery from './components/ImageGallery';
+//import Modal from './components/Modal';
 
 import imagesAPI from './services/images-api.js';
 
@@ -19,16 +20,11 @@ class App extends Component {
     error: null,
   };
 
-  componentDidMount() {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth',
-    });
-  }
-
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.getImages();
+    }
+    if (this.state.currentPage !== 1) {
       window.scrollTo({
         top: document.documentElement.scrollHeight,
         behavior: 'smooth',
@@ -85,7 +81,7 @@ class App extends Component {
         )}
 
         {!isLoading && images.length > 0 && (
-          <button type="button" className="button" onClick={this.getImages}>
+          <button type="button" className="Button" onClick={this.getImages}>
             Load More
           </button>
         )}

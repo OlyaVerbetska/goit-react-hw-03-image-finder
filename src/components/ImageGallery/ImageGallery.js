@@ -1,10 +1,15 @@
+import ImageGalleryItem from './ImageGalleryItem';
 
-import ImageGalleryItem from './ImageGalleryItem'
-
-const ImageGallery = ({ images }) => (<ul className="ImageGallery">
+const ImageGallery = ({ images }) => (
+  <ul className="ImageGallery">
     {images.map(image => (
-        <ImageGalleryItem imageGallery={image} key = {image.id}  />
+      <ImageGalleryItem
+        bigImage={image.largeImageURL}
+        galleryImage={image.webformatURL}
+        key={image.id}
+      />
     ))}
-</ul>)
+  </ul>
+);
 
 export default ImageGallery;

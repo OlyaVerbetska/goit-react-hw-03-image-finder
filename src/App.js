@@ -9,7 +9,7 @@ import Button from './components/Button';
 
 import imagesAPI from './services/images-api.js';
 
-import './styles.css';
+import './styles.scss';
 
 class App extends Component {
   state = {
@@ -71,14 +71,15 @@ class App extends Component {
         <Searchbar onSubmit={this.handleSearchQuery} />
         <ImageGallery images={images} />
         {isLoading && (
-          <Loader
+        <div className = "Loader">  <Loader
             type="Bars"
-            color="#00BFFF"
-            height={100}
-            width={100}
-            timeout={3000} //3 secs
+            color="#3f51b5"
+            height={60}
+            width={150}
+            timeout={1000} //3 secs
                
           />
+          </div>
         )}
 
         {!isLoading && images.length > 0 && (

@@ -27,20 +27,22 @@ toggleModal = () => {
 };
 
   render () {
+    const {galleryImage,altImage } = this.props;
+    const {showModal, modalImage, isLoad} = this.state;
     return (
     <>
       <li className="ImageGalleryItem">
     <img
-      src={this.props.galleryImage}
-      alt={this.props.altImage}
+      src={galleryImage}
+      alt={altImage}
       className="ImageGalleryItem-image"
       onClick ={this.toggleModal} 
          />
   </li>
-      {this.state.showModal && (
-          <Modal onClose={this.toggleModal} image = {this.state.modalImage}>
-             <img src={this.state.modalImage} alt=""/>
-            {this.state.isLoad && (
+      {showModal && (
+          <Modal onClose={this.toggleModal} image = {modalImage}>
+             <img src={modalImage} alt=""/>
+            {isLoad && (
         <div className = "Loader">  <Loader
             type="Hearts"
             color="#fff"

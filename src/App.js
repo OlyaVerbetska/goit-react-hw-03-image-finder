@@ -5,7 +5,7 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import Searchbar from './components/Searchbar/Searchbar';
 import ImageGallery from './components/ImageGallery';
-//import Modal from './components/Modal';
+import Button from './components/Button';
 
 import imagesAPI from './services/images-api.js';
 
@@ -77,13 +77,12 @@ class App extends Component {
             height={100}
             width={100}
             timeout={3000} //3 secs
+               
           />
         )}
 
         {!isLoading && images.length > 0 && (
-          <button type="button" className="Button" onClick={this.getImages}>
-            Load More
-          </button>
+          <Button onClick={this.getImages}> Load more</Button>
         )}
       </div>
     );

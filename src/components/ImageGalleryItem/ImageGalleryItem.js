@@ -2,6 +2,8 @@
 import {Component} from 'react';
 import Modal from '../Modal/Modal';
 
+import '../ImageGalleryItem/ImageGalleryItem.scss'
+
 class ImageGalleryItem extends Component {
   state = {
     modalImage: '',
@@ -24,14 +26,14 @@ toggleModal = () => {
       <li className="ImageGalleryItem">
     <img
       src={this.props.galleryImage}
-      alt=""
+      alt={this.props.altImage}
       className="ImageGalleryItem-image"
       onClick ={this.toggleModal} 
          />
   </li>
       {this.state.showModal && (
           <Modal onClose={this.toggleModal} image = {this.state.modalImage}>
-             <img src={this.state.modalImage} alt="" className = ".ImageGalleryItem-image"/>
+             <img src={this.state.modalImage} alt=""/>
           </Modal>
         )}
         </>

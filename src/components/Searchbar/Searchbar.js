@@ -1,5 +1,5 @@
 import { Component } from 'react';
-
+import '../Searchbar/Searchbar.scss';
 class Searchbar extends Component {
   state = {
     query: '',

@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import React from 'react';
 
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -12,6 +13,11 @@ import imagesAPI from './services/images-api.js';
 import './styles.scss';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.listRef = React.createRef();
+  }
+
   state = {
     images: [],
     currentPage: 1,
@@ -24,7 +30,8 @@ class App extends Component {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.getImages();
     }
-    if (this.state.currentPage !== 1) {
+
+    if (this.state.currentPage > 2) {
       window.scrollTo({
         top: document.documentElement.scrollHeight,
         behavior: 'smooth',
@@ -60,7 +67,8 @@ class App extends Component {
           currentPage: prevState.currentPage + 1,
         })),
       )
-      .catch(error => this.setState({ error: 'zhopa' }))
+
+      .catch(error => this.setState({ error: 'something not good' }))
       .finally(() => this.setState({ isLoading: false }));
   };
 
@@ -71,14 +79,15 @@ class App extends Component {
         <Searchbar onSubmit={this.handleSearchQuery} />
         <ImageGallery images={images} />
         {isLoading && (
-        <div className = "Loader">  <Loader
-            type="Bars"
-            color="#3f51b5"
-            height={60}
-            width={150}
-            timeout={1000} //3 secs
-               
-          />
+          <div className="Loader">
+            {' '}
+            <Loader
+              type="Bars"
+              color="#3f51b5"
+              height={60}
+              width={150}
+              timeout={1000} //3 secs
+            />
           </div>
         )}
 
